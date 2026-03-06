@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sanket Das — VR Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #070a0f;
+    --surface: #0d1117;
+    --surface2: #131921;
+    --accent: #00e5ff;
+    --text: #e8eaf0;
+    --muted: #7a8090;
+    --border: rgba(0,229,255,0.1);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 18px; line-height: 1.75; overflow-x: hidden;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px; pointer-events: none; z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 56px; height: 64px;
+    background: rgba(7,10,15,0.93); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:4px; color:var(--accent); text-decoration:none; }
+  .nav-links { display:flex; gap:32px; list-style:none; }
+  .nav-links a { text-decoration:none; color:var(--muted); font-family:'Space Mono',monospace; font-size:13px; letter-spacing:1.5px; text-transform:uppercase; transition:color 0.2s; }
+  .nav-links a:hover { color:var(--accent); }
+
+  /* HERO */
+  .hero { position:relative; min-height:100vh; display:flex; align-items:center; padding:0 64px; padding-top:64px; }
+  .hero-bg { position:absolute; inset:0; background:radial-gradient(ellipse 70% 50% at 55% 40%, rgba(0,229,255,0.04) 0%, transparent 65%); pointer-events:none; }
+  .hero-content { position:relative; z-index:1; max-width:760px; }
+  .hero-tag { font-family:'Space Mono',monospace; font-size:13px; letter-spacing:3px; color:var(--accent); text-transform:uppercase; margin-bottom:20px; opacity:0; animation:fadeUp 0.7s 0.1s forwards; }
+  h1.hero-name { font-family:'Bebas Neue',sans-serif; font-size:clamp(88px,11vw,148px); line-height:0.88; letter-spacing:6px; opacity:0; animation:fadeUp 0.7s 0.25s forwards; }
+  h1.hero-name span { color:var(--accent); }
+  .hero-sub { font-family:'Space Mono',monospace; font-size:14px; letter-spacing:2px; color:var(--muted); text-transform:uppercase; margin-top:22px; margin-bottom:26px; opacity:0; animation:fadeUp 0.7s 0.4s forwards; }
+  .hero-bio { font-size:20px; font-weight:300; color:rgba(232,234,240,0.65); max-width:560px; line-height:1.85; opacity:0; animation:fadeUp 0.7s 0.55s forwards; }
+  .hero-actions { display:flex; gap:14px; margin-top:36px; opacity:0; animation:fadeUp 0.7s 0.7s forwards; }
+  .btn { display:inline-flex; align-items:center; gap:8px; padding:14px 32px; font-family:'Space Mono',monospace; font-size:13px; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; cursor:pointer; transition:all 0.2s; border:none; }
+  .btn-primary { background:var(--accent); color:var(--bg); font-weight:700; }
+  .btn-primary:hover { background:#fff; box-shadow:0 0 30px rgba(0,229,255,0.35); }
+  .btn-outline { background:transparent; color:var(--accent); border:1px solid var(--accent); }
+  .btn-outline:hover { background:rgba(0,229,255,0.07); }
+
+  /* SECTIONS */
+  .section-wrap { position:relative; z-index:1; max-width:1140px; margin:0 auto; padding:100px 64px; }
+  .section-label { font-family:'Space Mono',monospace; font-size:12px; letter-spacing:3px; color:var(--accent); text-transform:uppercase; margin-bottom:8px; }
+  h2.section-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(44px,5vw,64px); letter-spacing:4px; margin-bottom:52px; }
+
+  /* EXPERIENCE */
+  .exp-item { display:grid; grid-template-columns:200px 1fr; gap:0 48px; padding:40px 0; border-top:1px solid var(--border); }
+  .exp-item:last-child { border-bottom:1px solid var(--border); }
+  .exp-date { font-family:'Space Mono',monospace; font-size:12px; letter-spacing:1px; color:var(--accent); text-transform:uppercase; padding-top:6px; line-height:1.6; }
+  .exp-loc { font-family:'Space Mono',monospace; font-size:12px; color:var(--muted); margin-top:6px; }
+  .exp-company { font-family:'Bebas Neue',sans-serif; font-size:34px; letter-spacing:3px; margin-bottom:4px; }
+  .exp-role { font-family:'Space Mono',monospace; font-size:12px; letter-spacing:2px; color:var(--accent); text-transform:uppercase; margin-bottom:18px; }
+  .exp-bullets { list-style:none; display:flex; flex-direction:column; gap:12px; }
+  .exp-bullets li { display:flex; gap:14px; font-size:17px; color:rgba(232,234,240,0.78); line-height:1.7; }
+  .exp-bullets li::before { content:'▸'; color:var(--accent); flex-shrink:0; margin-top:4px; }
+
+  /* PROJECTS */
+  .projects-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:3px; }
+  .project-card { background:var(--surface); border:1px solid var(--border); overflow:hidden; cursor:pointer; transition:border-color 0.25s, transform 0.25s; }
+  .project-card:hover { border-color:rgba(0,229,255,0.45); transform:translateY(-3px); }
+
+  .card-thumb { height:210px; background:var(--surface2); position:relative; overflow:hidden; }
+  .card-thumb img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.4s; }
+  .project-card:hover .card-thumb img { transform:scale(1.04); }
+  .card-thumb-fallback { width:100%; height:100%; display:none; align-items:center; justify-content:center; font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px; color:var(--muted); text-transform:uppercase; }
+
+  /* Google Drive thumbnail wrapper */
+  .card-thumb-drive { width:100%; height:100%; position:relative; overflow:hidden; }
+  .card-thumb-drive iframe { position:absolute; top:-60px; left:0; width:100%; height:calc(100% + 120px); border:none; pointer-events:none; transform:scale(1); }
+
+  .play-btn { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.38); transition:background 0.25s; }
+  .play-btn svg { width:56px; height:56px; filter:drop-shadow(0 2px 12px rgba(0,0,0,0.6)); transition:transform 0.2s; }
+  .project-card:hover .play-btn { background:rgba(0,229,255,0.12); }
+  .project-card:hover .play-btn svg { transform:scale(1.1); }
+
+  .card-body { padding:20px 24px; }
+  .card-cat { font-family:'Space Mono',monospace; font-size:11px; letter-spacing:1.5px; color:var(--accent); text-transform:uppercase; margin-bottom:6px; }
+  .card-title { font-family:'Bebas Neue',sans-serif; font-size:23px; letter-spacing:2px; margin-bottom:10px; }
+  .card-desc { font-size:15px; color:var(--muted); line-height:1.6; margin-bottom:14px; }
+  .card-tags { display:flex; flex-wrap:wrap; gap:6px; }
+  .tag { font-family:'Space Mono',monospace; font-size:10px; padding:3px 9px; background:rgba(0,229,255,0.06); border:1px solid rgba(0,229,255,0.15); color:rgba(0,229,255,0.75); text-transform:uppercase; letter-spacing:0.5px; }
+
+  /* MODAL */
+  .modal { display:none; position:fixed; inset:0; z-index:1000; background:rgba(7,10,15,0.96); backdrop-filter:blur(20px); align-items:center; justify-content:center; padding:20px; }
+  .modal.open { display:flex; }
+  .modal-inner { width:100%; max-width:920px; max-height:92vh; overflow-y:auto; position:relative; }
+  .modal-topbar { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:16px; gap:16px; }
+  .modal-close { background:none; border:1px solid var(--border); color:var(--muted); padding:8px 18px; flex-shrink:0; font-family:'Space Mono',monospace; font-size:12px; letter-spacing:1px; cursor:pointer; transition:all 0.2s; }
+  .modal-close:hover { color:var(--accent); border-color:var(--accent); }
+  .modal-cat { font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px; color:var(--accent); text-transform:uppercase; margin-bottom:4px; }
+  .modal-title { font-family:'Bebas Neue',sans-serif; font-size:38px; letter-spacing:3px; line-height:1; }
+
+  .slideshow { border:1px solid var(--border); background:#000; }
+  .slide { display:none; }
+  .slide.active { display:block; }
+
+  /* Click-to-open approach — shows thumbnail, opens link in new tab */
+  .slide-thumb {
+    position: relative; width:100%; padding-bottom:56.25%;
+    background:#111; cursor:pointer; overflow:hidden;
+  }
+  .slide-thumb img {
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; transition:transform 0.3s;
+  }
+  .slide-thumb:hover img { transform:scale(1.03); }
+  .slide-thumb-overlay {
+    position:absolute; inset:0;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
+    background:rgba(0,0,0,0.45); transition:background 0.25s;
+  }
+  .slide-thumb:hover .slide-thumb-overlay { background:rgba(0,229,255,0.12); }
+  .slide-play-icon {
+    width:72px; height:72px; border-radius:50%;
+    background:rgba(0,0,0,0.75); border:2px solid rgba(255,255,255,0.8);
+    display:flex; align-items:center; justify-content:center;
+    transition:transform 0.2s, border-color 0.2s;
+  }
+  .slide-thumb:hover .slide-play-icon { transform:scale(1.1); border-color:var(--accent); }
+  .slide-play-icon svg { width:28px; height:28px; margin-left:4px; }
+  .slide-open-label {
+    font-family:'Space Mono',monospace; font-size:12px; letter-spacing:2px;
+    text-transform:uppercase; color:rgba(255,255,255,0.8);
+    background:rgba(0,0,0,0.6); padding:6px 16px;
+  }
+
+  /* Drive/link fallback card */
+  .slide-linkcard { padding:56px 32px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; text-align:center; background:var(--surface2); min-height:280px; cursor:pointer; transition:background 0.2s; }
+  .slide-linkcard:hover { background:#1a2230; }
+  .slide-linkcard .lc-title { font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:2px; }
+  .slide-linkcard .lc-desc { font-size:15px; color:var(--muted); max-width:480px; }
+  .slide-linkcard a { font-family:'Space Mono',monospace; font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent); text-decoration:none; border:1px solid var(--accent); padding:11px 28px; transition:background 0.2s; }
+  .slide-linkcard a:hover { background:rgba(0,229,255,0.09); }
+
+  .slide-nav { display:flex; align-items:center; justify-content:space-between; padding:10px 14px; border-top:1px solid var(--border); background:var(--surface); }
+  .slide-counter { font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); letter-spacing:1px; }
+  .slide-nav-btn { background:none; border:1px solid var(--border); color:var(--muted); width:36px; height:36px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:20px; transition:all 0.2s; }
+  .slide-nav-btn:hover { border-color:var(--accent); color:var(--accent); }
+  .slide-dots { display:flex; gap:8px; align-items:center; }
+  .dot { width:7px; height:7px; border-radius:50%; background:var(--muted); cursor:pointer; transition:all 0.2s; }
+  .dot.active { background:var(--accent); width:20px; border-radius:4px; }
+
+  .slide-label { font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); letter-spacing:1px; padding:8px 14px; background:var(--surface); border-top:1px solid var(--border); }
+
+  .modal-desc { margin-top:16px; font-size:16px; color:rgba(232,234,240,0.6); line-height:1.8; }
+
+  /* SKILLS */
+  .skills-grid { display:flex; flex-wrap:wrap; gap:3px; }
+  .skill-pill { background:var(--surface); border:1px solid var(--border); padding:13px 22px; font-family:'Space Mono',monospace; font-size:13px; letter-spacing:1px; color:rgba(232,234,240,0.75); text-transform:uppercase; transition:border-color 0.2s, color 0.2s; }
+  .skill-pill:hover { border-color:rgba(0,229,255,0.35); color:var(--accent); }
+
+  /* AWARDS */
+  .accolade-item { border:1px solid var(--border); background:var(--surface); padding:20px 28px; display:flex; gap:18px; align-items:flex-start; margin-bottom:3px; }
+  .accolade-icon { font-size:20px; flex-shrink:0; margin-top:2px; }
+  .accolade-text { font-size:17px; color:rgba(232,234,240,0.82); line-height:1.5; }
+  .accolade-project { font-family:'Space Mono',monospace; font-size:11px; color:var(--accent); margin-top:4px; letter-spacing:1px; text-transform:uppercase; }
+
+  /* EDU */
+  .edu-grid { display:grid; grid-template-columns:1fr 1fr; gap:3px; }
+  .edu-card { background:var(--surface); border:1px solid var(--border); padding:32px; }
+  .edu-date { font-family:'Space Mono',monospace; font-size:12px; color:var(--accent); letter-spacing:1px; margin-bottom:12px; }
+  .edu-degree { font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:2px; margin-bottom:6px; }
+  .edu-school { font-size:16px; color:var(--muted); }
+
+  /* CONTACT */
+  .contact-wrap { position:relative; z-index:1; text-align:center; padding:100px 64px; border-top:1px solid var(--border); }
+  .contact-email { font-family:'Bebas Neue',sans-serif; font-size:clamp(32px,4vw,56px); letter-spacing:4px; color:var(--accent); text-decoration:none; display:block; margin:18px 0 32px; transition:text-shadow 0.3s; }
+  .contact-email:hover { text-shadow:0 0 40px rgba(0,229,255,0.4); }
+
+  footer { position:relative; z-index:1; background:var(--surface); border-top:1px solid var(--border); padding:20px 64px; display:flex; align-items:center; justify-content:space-between; }
+  footer span { font-family:'Space Mono',monospace; font-size:12px; color:var(--muted); }
+
+  @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+  ::-webkit-scrollbar { width:3px; }
+  ::-webkit-scrollbar-thumb { background:var(--accent); }
+
+  @media (max-width:768px) {
+    nav { padding:0 20px; }
+    .nav-links { display:none; }
+    .section-wrap { padding:64px 20px; }
+    .hero { padding:80px 20px 40px; }
+    .exp-item { grid-template-columns:1fr; gap:12px; }
+    .edu-grid { grid-template-columns:1fr; }
+    footer { flex-direction:column; gap:8px; padding:16px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#top" class="nav-logo">SD</a>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#awards">Awards</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div id="top" class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-tag">VR Developer &amp; Technical Lead</div>
+    <h1 class="hero-name">SANKET<br><span>DAS</span></h1>
+    <p class="hero-sub">Unreal Engine · Unity · XR · AI Integration</p>
+    <p class="hero-bio">Game developer specialising in VR simulation — from first aid training for the German market to AI-driven NPCs and multiplatform XR pipelines. Based in Pune, working remotely with studios in Germany.</p>
+    <div class="hero-actions">
+      <a href="mailto:sanket@gearoverclocked.com" class="btn btn-primary">Get in Touch</a>
+      <a href="https://www.linkedin.com/in/sanket-das-929b11120/" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<div id="experience" class="section-wrap">
+  <div class="section-label">Experience</div>
+  <h2 class="section-title">WORK HISTORY</h2>
+
+  <div class="exp-item">
+    <div>
+      <div class="exp-date">Jan 2025 — Present</div>
+      <div class="exp-loc">Düsseldorf / Remote</div>
+    </div>
+    <div>
+      <div class="exp-company">onVR</div>
+      <div class="exp-role">Senior VR Developer</div>
+      <ul class="exp-bullets">
+        <li>Leading a team of 5 developers on a multiplatform warehousing simulation in Unity targeting XR, iOS, and Android.</li>
+        <li>Architecting a modular Unity Package Manager system of reusable, multi-platform components.</li>
+        <li>Building a flow-control system that reads a Game Design Document and converts it to a JSON schema, automatically wiring up a pre-built mechanics library — bringing a new app from concept to playable build in hours.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="exp-item">
+    <div>
+      <div class="exp-date">May 2023 — Jan 2025</div>
+      <div class="exp-loc">Cologne / Remote</div>
+    </div>
+    <div>
+      <div class="exp-company">onliveline GmbH</div>
+      <div class="exp-role">VR Developer</div>
+      <ul class="exp-bullets">
+        <li>Led all programming on VR Medical Storytelling single-player applications.</li>
+        <li>Created in-engine cinematic animations using Unity's Timeline tool and Blender.</li>
+        <li>Integrated ElevenLabs API for generative NPC voice inside VR environments.</li>
+        <li>Built VR avatar NPCs with Ready Player Me SDK and Mixamo animations.</li>
+        <li>Worked on a GPT-based 3D AI character with context-driven mocap animation selection.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="exp-item">
+    <div>
+      <div class="exp-date">Jan 2022 — May 2023</div>
+      <div class="exp-loc">Pune</div>
+    </div>
+    <div>
+      <div class="exp-company">Freelance VR Developer</div>
+      <div class="exp-role">VR Developer</div>
+      <ul class="exp-bullets">
+        <li>Built a first aid VR training app for the German market — driving simulations, emergency call interactions, AI pedestrians, accident animations, and object manipulation.</li>
+        <li>Created randomised scenario logic requiring users to respond according to first aid guidelines.</li>
+        <li>Ported PCVR applications to Meta Quest 2.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="exp-item">
+    <div>
+      <div class="exp-date">Feb 2019 — Jan 2021</div>
+      <div class="exp-loc">Pune</div>
+    </div>
+    <div>
+      <div class="exp-company">Gear Overclocked Games</div>
+      <div class="exp-role">Technical Lead</div>
+      <ul class="exp-bullets">
+        <li>Developed gamified apps for an NGO to teach modern fishery techniques to farmers in India.</li>
+        <li>Prototyped Facebook Instant Games in Unity.</li>
+        <li>Consulting for local studios — rapid prototyping, game design, economy balancing.</li>
+        <li>Backend analytics with Google Analytics; optimised for mid and low-end Android devices.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="exp-item">
+    <div>
+      <div class="exp-date">May 2017 — Aug 2017</div>
+      <div class="exp-loc">Singapore</div>
+    </div>
+    <div>
+      <div class="exp-company">SUTD Gamelab</div>
+      <div class="exp-role">Game Designer — Intern</div>
+      <ul class="exp-bullets">
+        <li>Designed PvP combat levels for a multiplayer game shown at Game Start Asia 2017.</li>
+        <li>Wrote spec docs for an in-game editor balancing tool; balanced 1v1 asymmetric gameplay.</li>
+        <li>Shipped an MVP in 12 weeks.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div id="projects" style="background:rgba(0,229,255,0.012); position:relative; z-index:1;">
+  <div class="section-wrap">
+    <div class="section-label">Projects</div>
+    <h2 class="section-title">SELECTED WORK</h2>
+    <div class="projects-grid">
+
+      <!-- onVR: mG Treatment -->
+      <div class="project-card" onclick="openModal('mg')">
+        <div class="card-thumb">
+          <!-- Google Drive — no public thumbnail API, show a styled placeholder with Drive icon -->
+          <div style="width:100%;height:100%;background:linear-gradient(135deg,#0d1a2a,#0a2233);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;">
+            <svg width="48" height="48" viewBox="0 0 87.3 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6.6 66.85l3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8H0c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/>
+              <path d="M43.65 25L29.9 1.2C28.55 2 27.4 3.1 26.6 4.5L1.2 49.55c-.8 1.4-1.2 2.95-1.2 4.5h27.5z" fill="#00ac47"/>
+              <path d="M73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5H59.8l5.85 11.65z" fill="#ea4335"/>
+              <path d="M43.65 25L57.4 1.2C56.05.4 54.5 0 52.9 0H34.4c-1.6 0-3.1.45-4.5 1.2z" fill="#00832d"/>
+              <path d="M59.8 54.05H27.5L13.75 77.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.1-.45 4.5-1.2z" fill="#2684fc"/>
+              <path d="M73.4 27.5l-12.6-21.8C60 4.3 58.85 3.2 57.4 2.4L43.65 25l16.15 29.05H87.3c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/>
+            </svg>
+            <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(0,229,255,0.6);text-transform:uppercase;">Google Drive</span>
+            <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;color:rgba(232,234,240,0.5);text-transform:uppercase;">mG Treatment VR</span>
+          </div>
+          <div class="play-btn">
+            <svg viewBox="0 0 68 48" xmlns="http://www.w3.org/2000/svg" style="width:56px;height:56px;filter:drop-shadow(0 2px 12px rgba(0,0,0,0.6));">
+              <rect width="68" height="48" rx="10" fill="rgba(0,0,0,0.7)"/>
+              <path d="M27,34L45,24L27,14V34z" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">onVR · Medical VR</div>
+          <div class="card-title">mG TREATMENT STORYTELLING VR</div>
+          <div class="card-desc">Myasthenia Gravis treatment storytelling experience. Multiplatform VR application.</div>
+          <div class="card-tags"><span class="tag">Unity</span><span class="tag">XR</span><span class="tag">Medical</span></div>
+        </div>
+      </div>
+
+      <!-- onliveline: Storytelling VR -->
+      <div class="project-card" onclick="openModal('storytelling')">
+        <div class="card-thumb">
+          <img src="https://img.youtube.com/vi/SZoYSgkR1AY/maxresdefault.jpg"
+               onerror="this.src='https://img.youtube.com/vi/SZoYSgkR1AY/hqdefault.jpg'"
+               alt="Storytelling VR">
+          <div class="play-btn">
+            <svg viewBox="0 0 68 48" xmlns="http://www.w3.org/2000/svg" style="width:56px;height:56px;filter:drop-shadow(0 2px 12px rgba(0,0,0,0.6));">
+              <path d="M66.52,7.74C65.73,4.79,63.42,2.48,60.47,1.68C55.15,.33,34,0,34,0S12.85,.33,7.53,1.68C4.58,2.48,2.27,4.79,1.48,7.74C.13,13.06,0,24,0,24s.13,10.94,1.48,16.26c.79,2.95,3.1,5.26,6.05,6.06C12.85,47.67,34,48,34,48s21.15-.33,26.47-1.68c2.95-.8,5.26-3.11,6.05-6.06C67.87,34.94,68,24,68,24S67.87,13.06,66.52,7.74z" fill="#ff0000"/>
+              <path d="M27,34L45,24L27,14V34z" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">onliveline GmbH · VR Narrative</div>
+          <div class="card-title">STORYTELLING IN VR</div>
+          <div class="card-desc">VR medical storytelling application. ElevenLabs voice NPCs, Unity Timeline animations, Ready Player Me avatars.</div>
+          <div class="card-tags"><span class="tag">Unity</span><span class="tag">ElevenLabs</span><span class="tag">Blender</span></div>
+        </div>
+      </div>
+
+      <!-- onliveline: Lupus Therapy VR -->
+      <div class="project-card" onclick="openModal('lupus')">
+        <div class="card-thumb">
+          <img src="https://img.youtube.com/vi/htAMSiW7nPo/maxresdefault.jpg"
+               onerror="this.src='https://img.youtube.com/vi/htAMSiW7nPo/hqdefault.jpg'"
+               alt="Lupus Therapy VR">
+          <div class="play-btn">
+            <svg viewBox="0 0 68 48" xmlns="http://www.w3.org/2000/svg" style="width:56px;height:56px;filter:drop-shadow(0 2px 12px rgba(0,0,0,0.6));">
+              <path d="M66.52,7.74C65.73,4.79,63.42,2.48,60.47,1.68C55.15,.33,34,0,34,0S12.85,.33,7.53,1.68C4.58,2.48,2.27,4.79,1.48,7.74C.13,13.06,0,24,0,24s.13,10.94,1.48,16.26c.79,2.95,3.1,5.26,6.05,6.06C12.85,47.67,34,48,34,48s21.15-.33,26.47-1.68c2.95-.8,5.26-3.11,6.05-6.06C67.87,34.94,68,24,68,24S67.87,13.06,66.52,7.74z" fill="#ff0000"/>
+              <path d="M27,34L45,24L27,14V34z" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">onliveline GmbH · Medical VR</div>
+          <div class="card-title">LUPUS THERAPY VR</div>
+          <div class="card-desc">VR therapy experience for Lupus patients. Gameplay and marketing builds delivered.</div>
+          <div class="card-tags"><span class="tag">Unity</span><span class="tag">XR</span><span class="tag">Medical</span></div>
+        </div>
+      </div>
+
+      <!-- onliveline: LLM AI Character -->
+      <div class="project-card" onclick="openModal('llm-ai')">
+        <div class="card-thumb">
+          <img src="https://img.youtube.com/vi/lL47MWneEzI/maxresdefault.jpg"
+               onerror="this.src='https://img.youtube.com/vi/lL47MWneEzI/hqdefault.jpg'"
+               alt="LLM AI Character">
+          <div class="play-btn">
+            <svg viewBox="0 0 68 48" xmlns="http://www.w3.org/2000/svg" style="width:56px;height:56px;filter:drop-shadow(0 2px 12px rgba(0,0,0,0.6));">
+              <path d="M66.52,7.74C65.73,4.79,63.42,2.48,60.47,1.68C55.15,.33,34,0,34,0S12.85,.33,7.53,1.68C4.58,2.48,2.27,4.79,1.48,7.74C.13,13.06,0,24,0,24s.13,10.94,1.48,16.26c.79,2.95,3.1,5.26,6.05,6.06C12.85,47.67,34,48,34,48s21.15-.33,26.47-1.68c2.95-.8,5.26-3.11,6.05-6.06C67.87,34.94,68,24,68,24S67.87,13.06,66.52,7.74z" fill="#ff0000"/>
+              <path d="M27,34L45,24L27,14V34z" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">onliveline GmbH · AI</div>
+          <div class="card-title">LLM AI CHARACTER WITH MOCAP</div>
+          <div class="card-desc">GPT-based 3D AI character with context-driven mocap animation tree. Ready Player Me + Mixamo.</div>
+          <div class="card-tags"><span class="tag">GPT API</span><span class="tag">Unity</span><span class="tag">MoCap</span></div>
+        </div>
+      </div>
+
+      <!-- Freelance: First Aid VR -->
+      <div class="project-card" onclick="openModal('firstaid')">
+        <div class="card-thumb">
+          <!-- Drive only, no YouTube — styled placeholder -->
+          <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a0d0d,#2a0a0a);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;">
+            <span style="font-size:48px;">🚑</span>
+            <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;color:rgba(232,234,240,0.5);text-transform:uppercase;">First Aid VR</span>
+          </div>
+          <div class="play-btn">
+            <svg viewBox="0 0 68 48" xmlns="http://www.w3.org/2000/svg" style="width:56px;height:56px;filter:drop-shadow(0 2px 12px rgba(0,0,0,0.6));">
+              <rect width="68" height="48" rx="10" fill="rgba(0,0,0,0.7)"/>
+              <path d="M27,34L45,24L27,14V34z" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Freelance · VR Simulation</div>
+          <div class="card-title">FIRST AID IN TRAFFIC VR</div>
+          <div class="card-desc">Emergency response training for the German market. AI pedestrians, driving simulations, accident scenarios. Ported to Meta Quest 2.</div>
+          <div class="card-tags"><span class="tag">Unreal Engine</span><span class="tag">Quest 2</span><span class="tag">AI NPCs</span></div>
+        </div>
+      </div>
+
+      <!-- Gear Overclocked: Project Ego -->
+      <div class="project-card" onclick="openModal('ego')">
+        <div class="card-thumb">
+          <img src="https://img.youtube.com/vi/IpKqm6jshl4/maxresdefault.jpg"
+               onerror="this.src='https://img.youtube.com/vi/IpKqm6jshl4/hqdefault.jpg'"
+               alt="Project Ego">
+          <div class="play-btn">
+            <svg viewBox="0 0 68 48" xmlns="http://www.w3.org/2000/svg" style="width:56px;height:56px;filter:drop-shadow(0 2px 12px rgba(0,0,0,0.6));">
+              <path d="M66.52,7.74C65.73,4.79,63.42,2.48,60.47,1.68C55.15,.33,34,0,34,0S12.85,.33,7.53,1.68C4.58,2.48,2.27,4.79,1.48,7.74C.13,13.06,0,24,0,24s.13,10.94,1.48,16.26c.79,2.95,3.1,5.26,6.05,6.06C12.85,47.67,34,48,34,48s21.15-.33,26.47-1.68c2.95-.8,5.26-3.11,6.05-6.06C67.87,34.94,68,24,68,24S67.87,13.06,66.52,7.74z" fill="#ff0000"/>
+              <path d="M27,34L45,24L27,14V34z" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Gear Overclocked · Action Adventure</div>
+          <div class="card-title">PROJECT EGO</div>
+          <div class="card-desc">3rd-person action adventure game. Full gameplay and combat demo available.</div>
+          <div class="card-tags"><span class="tag">Unity</span><span class="tag">Action</span><span class="tag">3rd Person</span></div>
+        </div>
+      </div>
+
+      <!-- Gear Overclocked: Tremor -->
+      <div class="project-card" onclick="openModal('tremor')">
+        <div class="card-thumb">
+          <img src="https://img.youtube.com/vi/J0JlyC6GKeQ/maxresdefault.jpg"
+               onerror="this.src='https://img.youtube.com/vi/J0JlyC6GKeQ/hqdefault.jpg'"
+               alt="Tremor">
+          <div class="play-btn">
+            <svg viewBox="0 0 68 48" xmlns="http://www.w3.org/2000/svg" style="width:56px;height:56px;filter:drop-shadow(0 2px 12px rgba(0,0,0,0.6));">
+              <path d="M66.52,7.74C65.73,4.79,63.42,2.48,60.47,1.68C55.15,.33,34,0,34,0S12.85,.33,7.53,1.68C4.58,2.48,2.27,4.79,1.48,7.74C.13,13.06,0,24,0,24s.13,10.94,1.48,16.26c.79,2.95,3.1,5.26,6.05,6.06C12.85,47.67,34,48,34,48s21.15-.33,26.47-1.68c2.95-.8,5.26-3.11,6.05-6.06C67.87,34.94,68,24,68,24S67.87,13.06,66.52,7.74z" fill="#ff0000"/>
+              <path d="M27,34L45,24L27,14V34z" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Gear Overclocked · Mobile · 🏆 Award Winner</div>
+          <div class="card-title">TREMOR</div>
+          <div class="card-desc">Android hyper-casual game. Winner — Best Student Game (Indian &amp; International) FICCI BAF Awards 2017.</div>
+          <div class="card-tags"><span class="tag">Unity</span><span class="tag">Android</span><span class="tag">Hyper Casual</span></div>
+        </div>
+      </div>
+
+      <!-- Gear Overclocked: Facebook Instant Games -->
+      <div class="project-card" onclick="openModal('fbgame')">
+        <div class="card-thumb">
+          <img src="https://img.youtube.com/vi/trTnpCh1s4M/maxresdefault.jpg"
+               onerror="this.src='https://img.youtube.com/vi/trTnpCh1s4M/hqdefault.jpg'"
+               alt="Facebook Instant Game">
+          <div class="play-btn">
+            <svg viewBox="0 0 68 48" xmlns="http://www.w3.org/2000/svg" style="width:56px;height:56px;filter:drop-shadow(0 2px 12px rgba(0,0,0,0.6));">
+              <path d="M66.52,7.74C65.73,4.79,63.42,2.48,60.47,1.68C55.15,.33,34,0,34,0S12.85,.33,7.53,1.68C4.58,2.48,2.27,4.79,1.48,7.74C.13,13.06,0,24,0,24s.13,10.94,1.48,16.26c.79,2.95,3.1,5.26,6.05,6.06C12.85,47.67,34,48,34,48s21.15-.33,26.47-1.68c2.95-.8,5.26-3.11,6.05-6.06C67.87,34.94,68,24,68,24S67.87,13.06,66.52,7.74z" fill="#ff0000"/>
+              <path d="M27,34L45,24L27,14V34z" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Gear Overclocked · Mobile · Casual</div>
+          <div class="card-title">FACEBOOK INSTANT GAME</div>
+          <div class="card-desc">Casual game prototype built in Unity for Facebook's Instant Games platform.</div>
+          <div class="card-tags"><span class="tag">Unity</span><span class="tag">WebGL</span><span class="tag">Facebook SDK</span></div>
+        </div>
+      </div>
+
+      <!-- SUTD: Overpowered -->
+      <div class="project-card" onclick="openModal('overpowered')">
+        <div class="card-thumb">
+          <img src="https://img.youtube.com/vi/NlJb0i4hQ4I/maxresdefault.jpg"
+               onerror="this.src='https://img.youtube.com/vi/NlJb0i4hQ4I/hqdefault.jpg'"
+               alt="Overpowered">
+          <div class="play-btn">
+            <svg viewBox="0 0 68 48" xmlns="http://www.w3.org/2000/svg" style="width:56px;height:56px;filter:drop-shadow(0 2px 12px rgba(0,0,0,0.6));">
+              <path d="M66.52,7.74C65.73,4.79,63.42,2.48,60.47,1.68C55.15,.33,34,0,34,0S12.85,.33,7.53,1.68C4.58,2.48,2.27,4.79,1.48,7.74C.13,13.06,0,24,0,24s.13,10.94,1.48,16.26c.79,2.95,3.1,5.26,6.05,6.06C12.85,47.67,34,48,34,48s21.15-.33,26.47-1.68c2.95-.8,5.26-3.11,6.05-6.06C67.87,34.94,68,24,68,24S67.87,13.06,66.52,7.74z" fill="#ff0000"/>
+              <path d="M27,34L45,24L27,14V34z" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">SUTD Gamelab · PvP Combat</div>
+          <div class="card-title">OVERPOWERED</div>
+          <div class="card-desc">PC PvP combat game developed at SUTD Gamelab Singapore. Nominated — Taipei Game Show 2017.</div>
+          <div class="card-tags"><span class="tag">Unity</span><span class="tag">PC</span><span class="tag">PvP</span></div>
+        </div>
+      </div>
+
+      <!-- Proximity -->
+      <div class="project-card" onclick="openModal('proximity')">
+        <div class="card-thumb">
+          <img src="https://img.youtube.com/vi/euQ3nH93Hts/maxresdefault.jpg"
+               onerror="this.src='https://img.youtube.com/vi/euQ3nH93Hts/hqdefault.jpg'"
+               alt="Proximity">
+          <div class="play-btn">
+            <svg viewBox="0 0 68 48" xmlns="http://www.w3.org/2000/svg" style="width:56px;height:56px;filter:drop-shadow(0 2px 12px rgba(0,0,0,0.6));">
+              <path d="M66.52,7.74C65.73,4.79,63.42,2.48,60.47,1.68C55.15,.33,34,0,34,0S12.85,.33,7.53,1.68C4.58,2.48,2.27,4.79,1.48,7.74C.13,13.06,0,24,0,24s.13,10.94,1.48,16.26c.79,2.95,3.1,5.26,6.05,6.06C12.85,47.67,34,48,34,48s21.15-.33,26.47-1.68c2.95-.8,5.26-3.11,6.05-6.06C67.87,34.94,68,24,68,24S67.87,13.06,66.52,7.74z" fill="#ff0000"/>
+              <path d="M27,34L45,24L27,14V34z" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Student Game · 🏆 Award Winner</div>
+          <div class="card-title">PROXIMITY</div>
+          <div class="card-desc">Award-winning student game. Winner — Student Game of the Year 2016 NGF Award. Nominated — Casual Connect San Francisco 2016.</div>
+          <div class="card-tags"><span class="tag">Unity</span><span class="tag">Student Project</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<div id="skills" class="section-wrap">
+  <div class="section-label">Skills</div>
+  <h2 class="section-title">TOOLS &amp; TECH</h2>
+  <div class="skills-grid">
+    <div class="skill-pill">Unity</div>
+    <div class="skill-pill">Unreal Engine</div>
+    <div class="skill-pill">C#</div>
+    <div class="skill-pill">UE Blueprints</div>
+    <div class="skill-pill">XR / VR Development</div>
+    <div class="skill-pill">Meta Quest</div>
+    <div class="skill-pill">GPT / AI Integration</div>
+    <div class="skill-pill">ElevenLabs API</div>
+    <div class="skill-pill">Ready Player Me SDK</div>
+    <div class="skill-pill">Blender 3D</div>
+    <div class="skill-pill">Unity Timeline</div>
+    <div class="skill-pill">Mixamo</div>
+    <div class="skill-pill">GitHub</div>
+    <div class="skill-pill">Perforce</div>
+    <div class="skill-pill">AWS</div>
+    <div class="skill-pill">JIRA</div>
+    <div class="skill-pill">Game Design</div>
+    <div class="skill-pill">Rapid Prototyping</div>
+  </div>
+</div>
+
+<!-- AWARDS -->
+<div id="awards" class="section-wrap" style="padding-top:0;">
+  <div class="section-label">Recognition</div>
+  <h2 class="section-title">AWARDS</h2>
+  <div class="accolade-item">
+    <div class="accolade-icon">🏆</div>
+    <div>
+      <div class="accolade-text">Winner — Student Game of the Year 2016, NGF Award (Nasscom GDC)</div>
+      <div class="accolade-project">Proximity</div>
+    </div>
+  </div>
+  <div class="accolade-item">
+    <div class="accolade-icon">🏆</div>
+    <div>
+      <div class="accolade-text">Winner — Best Student Game (Indian &amp; International), FICCI BAF Awards 2017</div>
+      <div class="accolade-project">Tremor</div>
+    </div>
+  </div>
+  <div class="accolade-item">
+    <div class="accolade-icon">🎖️</div>
+    <div>
+      <div class="accolade-text">Nominated — Indie Prize Showcase, Casual Connect San Francisco 2016</div>
+      <div class="accolade-project">Proximity</div>
+    </div>
+  </div>
+  <div class="accolade-item">
+    <div class="accolade-icon">🎖️</div>
+    <div>
+      <div class="accolade-text">Nominated — Big Indie Pitch, Pocket Gamer's Connect Helsinki 2017</div>
+      <div class="accolade-project">No Monkey Business</div>
+    </div>
+  </div>
+  <div class="accolade-item">
+    <div class="accolade-icon">🎖️</div>
+    <div>
+      <div class="accolade-text">Nominated — Taipei Game Show 2017</div>
+      <div class="accolade-project">Overpowered</div>
+    </div>
+  </div>
+
+  <div style="margin-top:60px;">
+    <div class="section-label">Education</div>
+    <h2 class="section-title">EDUCATION</h2>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-date">Sep 2017 — Sep 2018</div>
+        <div class="edu-degree">MA in Games Enterprise</div>
+        <div class="edu-school">University of South Wales, Cardiff</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-date">Sep 2014 — Mar 2017</div>
+        <div class="edu-degree">Game Design &amp; Project Management (F3)</div>
+        <div class="edu-school">Rubika Supinfogame, Pune</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="contact" class="contact-wrap">
+  <div class="section-label">Contact</div>
+  <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,4vw,56px);letter-spacing:4px;margin-top:8px;">GET IN TOUCH</h2>
+  <a href="mailto:sanket@gearoverclocked.com" class="contact-email">sanket@gearoverclocked.com</a>
+  <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+    <a href="https://www.linkedin.com/in/sanket-das-929b11120/" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
+    <a href="tel:+918459328768" class="btn btn-outline">+91 84593 28768</a>
+  </div>
+</div>
+
+<footer>
+  <span>Sanket Das — VR Developer</span>
+  <span>Pune, India</span>
+</footer>
+
+<!-- MODAL -->
+<div class="modal" id="modal" onclick="closeOutside(event)">
+  <div class="modal-inner">
+    <div class="modal-topbar">
+      <div>
+        <div class="modal-cat" id="modal-cat"></div>
+        <div class="modal-title" id="modal-title"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕ CLOSE</button>
+    </div>
+    <div class="slideshow">
+      <div id="slides-container"></div>
+      <div class="slide-label" id="slide-label-bar"></div>
+      <div class="slide-nav">
+        <button class="slide-nav-btn" onclick="prevSlide()">‹</button>
+        <div class="slide-dots" id="slide-dots"></div>
+        <span class="slide-counter" id="slide-counter"></span>
+        <button class="slide-nav-btn" onclick="nextSlide()">›</button>
+      </div>
+    </div>
+    <p class="modal-desc" id="modal-desc"></p>
+  </div>
+</div>
+
+<script>
+// slide types:
+// { type:'youtube', id:'VIDEO_ID', label:'...' }
+// { type:'drive',   id:'FILE_ID',  label:'...' }
+// { type:'link',    url:'...',     label:'...', desc:'...' }
+
+const YT = (id, label) => ({ type:'youtube', id, label });
+const DR = (id, label) => ({ type:'drive', id, label });
+const LK = (url, label, desc) => ({ type:'link', url, label, desc });
+
+const projects = {
+  'mg': {
+    cat: 'onVR · Medical VR',
+    title: 'mG TREATMENT STORYTELLING VR',
+    desc: 'Myasthenia Gravis treatment storytelling VR experience. Multiplatform application built with Unity.',
+    slides: [
+      DR('14ig2M_vNExWd_-i6A1NMGoeu-7uiYfQ0', 'mG Treatment VR — Demo'),
+    ]
+  },
+  'storytelling': {
+    cat: 'onliveline GmbH · VR Narrative',
+    title: 'STORYTELLING IN VR',
+    desc: 'VR medical storytelling application. ElevenLabs API for NPC voice, Unity Timeline + Blender for cinematic animations, Ready Player Me avatars.',
+    slides: [
+      YT('SZoYSgkR1AY', 'Storytelling in VR — Demo'),
+    ]
+  },
+  'lupus': {
+    cat: 'onliveline GmbH · Medical VR',
+    title: 'LUPUS THERAPY VR',
+    desc: 'VR therapy experience for Lupus patients. Gameplay and marketing builds delivered.',
+    slides: [
+      DR('1UlTJKfeCbBydOKRd_6XWsxM9rv-91ykY', 'Lupus Therapy VR — Gameplay'),
+      YT('htAMSiW7nPo', 'Lupus Therapy VR — Marketing'),
+    ]
+  },
+  'llm-ai': {
+    cat: 'onliveline GmbH · AI Character',
+    title: 'LLM AI CHARACTER WITH MOCAP',
+    desc: 'GPT-based 3D AI character with context-sensitive mocap animation tree. Conversations drive animation state selection in real time. Built with Ready Player Me SDK and Mixamo rigs.',
+    slides: [
+      YT('lL47MWneEzI', 'LLM AI Character — Demo'),
+    ]
+  },
+  'firstaid': {
+    cat: 'Freelance · VR Simulation',
+    title: 'FIRST AID IN TRAFFIC VR',
+    desc: 'Emergency response VR training for the German market. AI pedestrians, driving simulations, randomised accident scenarios, object manipulation. Ported to Meta Quest 2 (firefighting tutorial).',
+    slides: [
+      DR('1tf7NH4ZUiXVIAokYzWborAXxzyDyxSHu', 'First Aid in Traffic — Demo'),
+      DR('12jXN2_fnMwCB78-uhaL3nWFNTXhhCyz7', 'PC VR → Quest 2 Port — Firefighting Tutorial'),
+      LK('https://weltenmacher.de/erste-hilfe-szenario/', 'Marketing Page', 'View the project on the Weltenmacher website.'),
+    ]
+  },
+  'ego': {
+    cat: 'Gear Overclocked · Action Adventure',
+    title: 'PROJECT EGO',
+    desc: '3rd-person action adventure game. Full gameplay and combat demo available.',
+    slides: [
+      YT('IpKqm6jshl4', 'Project Ego — Gameplay'),
+      YT('_8xMwmPSzR4', 'Project Ego — Combat Gameplay'),
+      LK('https://www.gearoverclocked.com', 'Studio / Marketing Page', 'View the Gear Overclocked studio website.'),
+    ]
+  },
+  'tremor': {
+    cat: 'Gear Overclocked · Mobile',
+    title: 'TREMOR',
+    desc: 'Award-winning Android hyper-casual game. Winner — Best Student Game (Indian & International) FICCI BAF Awards 2017.',
+    slides: [
+      YT('J0JlyC6GKeQ', 'Tremor — Gameplay'),
+      DR('1IYSTTzGGr5tGxU5GALz1WDesVp7ADAQz', 'Ultra Star — Related Hyper Casual'),
+      DR('18m47uGDmumOYPpT-fCmysG6fFPoZfe1W', 'Unity Consultancy Work'),
+    ]
+  },
+  'fbgame': {
+    cat: 'Gear Overclocked · Casual',
+    title: 'FACEBOOK INSTANT GAME',
+    desc: 'Casual game prototype for Facebook Instant Games, built in Unity/WebGL.',
+    slides: [
+      YT('trTnpCh1s4M', 'Facebook Instant Game — Demo'),
+    ]
+  },
+  'overpowered': {
+    cat: 'SUTD Gamelab · PvP Combat',
+    title: 'OVERPOWERED',
+    desc: 'PC PvP combat game developed at SUTD Gamelab Singapore for Game Start Asia 2017. Nominated — Taipei Game Show 2017.',
+    slides: [
+      YT('NlJb0i4hQ4I', 'Overpowered — Gameplay'),
+    ]
+  },
+  'proximity': {
+    cat: 'Student Game · Award Winner',
+    title: 'PROXIMITY',
+    desc: 'Award-winning student game. Winner — Student Game of the Year 2016 NGF Award (Nasscom GDC). Nominated — Indie Prize Showcase, Casual Connect San Francisco 2016.',
+    slides: [
+      YT('euQ3nH93Hts', 'Proximity — Gameplay'),
+    ]
+  },
+};
+
+let currentSlide = 0;
+let currentSlides = [];
+
+function openModal(key) {
+  const p = projects[key];
+  document.getElementById('modal-cat').textContent = p.cat;
+  document.getElementById('modal-title').textContent = p.title;
+  document.getElementById('modal-desc').textContent = p.desc;
+  currentSlides = p.slides;
+  currentSlide = 0;
+  renderSlides();
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeOutside(e) {
+  if (e.target === document.getElementById('modal')) closeModal();
+}
+
+function updateMeta() {
+  const s = currentSlides[currentSlide];
+  document.getElementById('slide-label-bar').textContent = s ? s.label : '';
+  document.getElementById('slide-counter').textContent = currentSlides.length > 1
+    ? `${currentSlide + 1} / ${currentSlides.length}` : '';
+}
+
+function renderSlides() {
+  const container = document.getElementById('slides-container');
+  const dots = document.getElementById('slide-dots');
+  container.innerHTML = '';
+  dots.innerHTML = '';
+
+  currentSlides.forEach((s, i) => {
+    const slide = document.createElement('div');
+    slide.className = 'slide' + (i === currentSlide ? ' active' : '');
+
+    let url, thumbSrc, thumbFallback;
+
+    if (s.type === 'youtube') {
+      url = `https://www.youtube.com/watch?v=${s.id}`;
+      thumbSrc = `https://img.youtube.com/vi/${s.id}/maxresdefault.jpg`;
+      thumbFallback = `https://img.youtube.com/vi/${s.id}/hqdefault.jpg`;
+      slide.innerHTML = `
+        <div class="slide-thumb" onclick="window.open('${url}','_blank')">
+          <img src="${thumbSrc}" onerror="this.src='${thumbFallback}'" alt="${s.label}">
+          <div class="slide-thumb-overlay">
+            <div class="slide-play-icon">
+              <svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <div class="slide-open-label">Watch on YouTube ↗</div>
+          </div>
+        </div>`;
+    } else if (s.type === 'drive') {
+      url = `https://drive.google.com/file/d/${s.id}/view`;
+      slide.innerHTML = `
+        <div class="slide-thumb" onclick="window.open('${url}','_blank')" style="background:linear-gradient(135deg,#0d1a2a,#0a2233);">
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;">
+            <svg width="52" height="52" viewBox="0 0 87.3 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6.6 66.85l3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8H0c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/>
+              <path d="M43.65 25L29.9 1.2C28.55 2 27.4 3.1 26.6 4.5L1.2 49.55c-.8 1.4-1.2 2.95-1.2 4.5h27.5z" fill="#00ac47"/>
+              <path d="M73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5H59.8l5.85 11.65z" fill="#ea4335"/>
+              <path d="M43.65 25L57.4 1.2C56.05.4 54.5 0 52.9 0H34.4c-1.6 0-3.1.45-4.5 1.2z" fill="#00832d"/>
+              <path d="M59.8 54.05H27.5L13.75 77.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.1-.45 4.5-1.2z" fill="#2684fc"/>
+              <path d="M73.4 27.5l-12.6-21.8C60 4.3 58.85 3.2 57.4 2.4L43.65 25l16.15 29.05H87.3c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/>
+            </svg>
+            <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;color:rgba(232,234,240,0.6);text-transform:uppercase;">${s.label}</span>
+          </div>
+          <div class="slide-thumb-overlay">
+            <div class="slide-play-icon">
+              <svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <div class="slide-open-label">Open in Google Drive ↗</div>
+          </div>
+        </div>`;
+    } else {
+      slide.innerHTML = `
+        <div class="slide-linkcard" onclick="window.open('${s.url}','_blank')">
+          <div class="lc-title">${s.label}</div>
+          <div class="lc-desc">${s.desc || ''}</div>
+          <a href="${s.url}" target="_blank" onclick="event.stopPropagation()">Open Link ↗</a>
+        </div>`;
+    }
+
+    container.appendChild(slide);
+
+    if (currentSlides.length > 1) {
+      const dot = document.createElement('div');
+      dot.className = 'dot' + (i === currentSlide ? ' active' : '');
+      dot.onclick = () => goToSlide(i);
+      dots.appendChild(dot);
+    }
+  });
+
+  updateMeta();
+}
+
+function goToSlide(n) {
+  currentSlide = n;
+  document.querySelectorAll('#slides-container .slide').forEach((s, i) => s.classList.toggle('active', i === n));
+  document.querySelectorAll('#slide-dots .dot').forEach((d, i) => d.classList.toggle('active', i === n));
+  updateMeta();
+}
+
+function nextSlide() { if (currentSlides.length > 1) goToSlide((currentSlide + 1) % currentSlides.length); }
+function prevSlide() { if (currentSlides.length > 1) goToSlide((currentSlide - 1 + currentSlides.length) % currentSlides.length); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+  if (e.key === 'ArrowRight') nextSlide();
+  if (e.key === 'ArrowLeft') prevSlide();
+});
+</script>
+</body>
+</html>
