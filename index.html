@@ -85,10 +85,6 @@
   .project-card:hover .card-thumb img { transform:scale(1.04); }
   .card-thumb-fallback { width:100%; height:100%; display:none; align-items:center; justify-content:center; font-family:'Space Mono',monospace; font-size:11px; letter-spacing:2px; color:var(--muted); text-transform:uppercase; }
 
-  /* Google Drive thumbnail wrapper */
-  .card-thumb-drive { width:100%; height:100%; position:relative; overflow:hidden; }
-  .card-thumb-drive iframe { position:absolute; top:-60px; left:0; width:100%; height:calc(100% + 120px); border:none; pointer-events:none; transform:scale(1); }
-
   .play-btn { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.38); transition:background 0.25s; }
   .play-btn svg { width:56px; height:56px; filter:drop-shadow(0 2px 12px rgba(0,0,0,0.6)); transition:transform 0.2s; }
   .project-card:hover .play-btn { background:rgba(0,229,255,0.12); }
@@ -115,7 +111,6 @@
   .slide { display:none; }
   .slide.active { display:block; }
 
-  /* Click-to-open approach — shows thumbnail, opens link in new tab */
   .slide-thumb {
     position: relative; width:100%; padding-bottom:56.25%;
     background:#111; cursor:pointer; overflow:hidden;
@@ -145,7 +140,6 @@
     background:rgba(0,0,0,0.6); padding:6px 16px;
   }
 
-  /* Drive/link fallback card */
   .slide-linkcard { padding:56px 32px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; text-align:center; background:var(--surface2); min-height:280px; cursor:pointer; transition:background 0.2s; }
   .slide-linkcard:hover { background:#1a2230; }
   .slide-linkcard .lc-title { font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:2px; }
@@ -227,7 +221,7 @@
     <p class="hero-sub">Unreal Engine · Unity · XR · AI Integration</p>
     <p class="hero-bio">Game developer specialising in VR simulation — from first aid training for the German market to AI-driven NPCs and multiplatform XR pipelines. Based in Pune, working remotely with studios in Germany.</p>
     <div class="hero-actions">
-      <a href="mailto:sanket@gearoverclocked.com" class="btn btn-primary">Get in Touch</a>
+      <a href="mailto:sanketdas@live.com" class="btn btn-primary">Get in Touch</a>
       <a href="https://www.linkedin.com/in/sanket-das-929b11120/" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
     </div>
   </div>
@@ -247,7 +241,7 @@
       <div class="exp-company">onVR</div>
       <div class="exp-role">Senior VR Developer</div>
       <ul class="exp-bullets">
-        <li>Leading a team of 5 developers on a multiplatform warehousing simulation in Unity targeting XR, iOS, and Android.</li>
+        <li>Leading a dev team on a multiplatform warehousing simulation in Unity targeting XR, iOS, and Android.</li>
         <li>Architecting a modular Unity Package Manager system of reusable, multi-platform components.</li>
         <li>Building a flow-control system that reads a Game Design Document and converts it to a JSON schema, automatically wiring up a pre-built mechanics library — bringing a new app from concept to playable build in hours.</li>
       </ul>
@@ -274,12 +268,12 @@
 
   <div class="exp-item">
     <div>
-      <div class="exp-date">Jan 2022 — May 2023</div>
-      <div class="exp-loc">Pune</div>
+      <div class="exp-date">May 2022 — May 2023</div>
+      <div class="exp-loc">Remote</div>
     </div>
     <div>
       <div class="exp-company">Freelance VR Developer</div>
-      <div class="exp-role">VR Developer</div>
+      <div class="exp-role">Virtual Reality Developer</div>
       <ul class="exp-bullets">
         <li>Built a first aid VR training app for the German market — driving simulations, emergency call interactions, AI pedestrians, accident animations, and object manipulation.</li>
         <li>Created randomised scenario logic requiring users to respond according to first aid guidelines.</li>
@@ -290,12 +284,12 @@
 
   <div class="exp-item">
     <div>
-      <div class="exp-date">Feb 2019 — Jan 2021</div>
-      <div class="exp-loc">Pune</div>
+      <div class="exp-date">Feb 2019 — Jan 2022</div>
+      <div class="exp-loc">Pune / Remote</div>
     </div>
     <div>
-      <div class="exp-company">Gear Overclocked Games</div>
-      <div class="exp-role">Technical Lead</div>
+      <div class="exp-company">Consultant / Self-Employed</div>
+      <div class="exp-role">Game Programmer</div>
       <ul class="exp-bullets">
         <li>Developed gamified apps for an NGO to teach modern fishery techniques to farmers in India.</li>
         <li>Prototyped Facebook Instant Games in Unity.</li>
@@ -332,7 +326,6 @@
       <!-- onVR: mG Treatment -->
       <div class="project-card" onclick="openModal('mg')">
         <div class="card-thumb">
-          <!-- Google Drive — no public thumbnail API, show a styled placeholder with Drive icon -->
           <div style="width:100%;height:100%;background:linear-gradient(135deg,#0d1a2a,#0a2233);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;">
             <svg width="48" height="48" viewBox="0 0 87.3 78" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M6.6 66.85l3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8H0c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/>
@@ -426,7 +419,6 @@
       <!-- Freelance: First Aid VR -->
       <div class="project-card" onclick="openModal('firstaid')">
         <div class="card-thumb">
-          <!-- Drive only, no YouTube — styled placeholder -->
           <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a0d0d,#2a0a0a);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;">
             <span style="font-size:48px;">🚑</span>
             <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;color:rgba(232,234,240,0.5);text-transform:uppercase;">First Aid VR</span>
@@ -446,7 +438,7 @@
         </div>
       </div>
 
-      <!-- Gear Overclocked: Project Ego -->
+      <!-- Consultant: Project Ego -->
       <div class="project-card" onclick="openModal('ego')">
         <div class="card-thumb">
           <img src="https://img.youtube.com/vi/IpKqm6jshl4/maxresdefault.jpg"
@@ -460,14 +452,14 @@
           </div>
         </div>
         <div class="card-body">
-          <div class="card-cat">Gear Overclocked · Action Adventure</div>
+          <div class="card-cat">Consultant / Self-Employed · Action Adventure</div>
           <div class="card-title">PROJECT EGO</div>
           <div class="card-desc">3rd-person action adventure game. Full gameplay and combat demo available.</div>
           <div class="card-tags"><span class="tag">Unity</span><span class="tag">Action</span><span class="tag">3rd Person</span></div>
         </div>
       </div>
 
-      <!-- Gear Overclocked: Tremor -->
+      <!-- Consultant: Tremor -->
       <div class="project-card" onclick="openModal('tremor')">
         <div class="card-thumb">
           <img src="https://img.youtube.com/vi/J0JlyC6GKeQ/maxresdefault.jpg"
@@ -481,14 +473,14 @@
           </div>
         </div>
         <div class="card-body">
-          <div class="card-cat">Gear Overclocked · Mobile · 🏆 Award Winner</div>
+          <div class="card-cat">Consultant / Self-Employed · Mobile · 🏆 Award Winner</div>
           <div class="card-title">TREMOR</div>
           <div class="card-desc">Android hyper-casual game. Winner — Best Student Game (Indian &amp; International) FICCI BAF Awards 2017.</div>
           <div class="card-tags"><span class="tag">Unity</span><span class="tag">Android</span><span class="tag">Hyper Casual</span></div>
         </div>
       </div>
 
-      <!-- Gear Overclocked: Facebook Instant Games -->
+      <!-- Consultant: Facebook Instant Games -->
       <div class="project-card" onclick="openModal('fbgame')">
         <div class="card-thumb">
           <img src="https://img.youtube.com/vi/trTnpCh1s4M/maxresdefault.jpg"
@@ -502,7 +494,7 @@
           </div>
         </div>
         <div class="card-body">
-          <div class="card-cat">Gear Overclocked · Mobile · Casual</div>
+          <div class="card-cat">Consultant / Self-Employed · Casual</div>
           <div class="card-title">FACEBOOK INSTANT GAME</div>
           <div class="card-desc">Casual game prototype built in Unity for Facebook's Instant Games platform.</div>
           <div class="card-tags"><span class="tag">Unity</span><span class="tag">WebGL</span><span class="tag">Facebook SDK</span></div>
@@ -632,7 +624,7 @@
       </div>
       <div class="edu-card">
         <div class="edu-date">Sep 2014 — Mar 2017</div>
-        <div class="edu-degree">Game Design &amp; Project Management (F3)</div>
+        <div class="edu-degree">Game Design &amp; Project Management</div>
         <div class="edu-school">Rubika Supinfogame, Pune</div>
       </div>
     </div>
@@ -642,10 +634,11 @@
 <div id="contact" class="contact-wrap">
   <div class="section-label">Contact</div>
   <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,4vw,56px);letter-spacing:4px;margin-top:8px;">GET IN TOUCH</h2>
-  <a href="mailto:sanket@gearoverclocked.com" class="contact-email">sanket@gearoverclocked.com</a>
+  <a href="mailto:sanketdas@live.com" class="contact-email">sanketdas@live.com</a>
   <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
     <a href="https://www.linkedin.com/in/sanket-das-929b11120/" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
     <a href="tel:+918459328768" class="btn btn-outline">+91 84593 28768</a>
+    <a href="https://wa.me/918459328768" target="_blank" class="btn btn-outline">WhatsApp ↗</a>
   </div>
 </div>
 
@@ -679,11 +672,6 @@
 </div>
 
 <script>
-// slide types:
-// { type:'youtube', id:'VIDEO_ID', label:'...' }
-// { type:'drive',   id:'FILE_ID',  label:'...' }
-// { type:'link',    url:'...',     label:'...', desc:'...' }
-
 const YT = (id, label) => ({ type:'youtube', id, label });
 const DR = (id, label) => ({ type:'drive', id, label });
 const LK = (url, label, desc) => ({ type:'link', url, label, desc });
@@ -733,7 +721,7 @@ const projects = {
     ]
   },
   'ego': {
-    cat: 'Gear Overclocked · Action Adventure',
+    cat: 'Consultant / Self-Employed · Action Adventure',
     title: 'PROJECT EGO',
     desc: '3rd-person action adventure game. Full gameplay and combat demo available.',
     slides: [
@@ -743,7 +731,7 @@ const projects = {
     ]
   },
   'tremor': {
-    cat: 'Gear Overclocked · Mobile',
+    cat: 'Consultant / Self-Employed · Mobile',
     title: 'TREMOR',
     desc: 'Award-winning Android hyper-casual game. Winner — Best Student Game (Indian & International) FICCI BAF Awards 2017.',
     slides: [
@@ -753,7 +741,7 @@ const projects = {
     ]
   },
   'fbgame': {
-    cat: 'Gear Overclocked · Casual',
+    cat: 'Consultant / Self-Employed · Casual',
     title: 'FACEBOOK INSTANT GAME',
     desc: 'Casual game prototype for Facebook Instant Games, built in Unity/WebGL.',
     slides: [
