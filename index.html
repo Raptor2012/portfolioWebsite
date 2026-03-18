@@ -10,7 +10,7 @@
   *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:64px}
   body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:18px;line-height:1.75;overflow-x:hidden}
   body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,229,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.025) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
-  nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 56px;height:64px;background:rgba(7,10,15,0.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+  nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:0 56px;height:64px;background:rgba(7,10,15,0.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
   .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:4px;color:var(--accent);text-decoration:none}
   .nav-links{display:flex;gap:32px;list-style:none}
   .nav-links a{text-decoration:none;color:var(--muted);font-family:'Space Mono',monospace;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.2s}
@@ -118,7 +118,6 @@
 </head>
 <body>
 <nav>
-  <a href="#top" class="nav-logo">SD</a>
   <ul class="nav-links">
     <li><a href="#experience">Experience</a></li>
     <li><a href="#projects">Projects</a></li>
@@ -140,7 +139,7 @@
 
 Fan of the 3R's (Racing, RPGs, Roguelikes)</p>
     <div class="hero-actions">
-      <a href="mailto:sanketdas@live.com" class="btn btn-primary">Get in Touch</a>
+      <a href="/cdn-cgi/l/email-protection#2b584a45404e5f4f4a586b47425d4e05484446" class="btn btn-primary">Get in Touch</a>
       <a href="https://www.linkedin.com/in/sanket-das-929b11120/" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
     </div>
   </div>
@@ -225,32 +224,7 @@ Fan of the 3R's (Racing, RPGs, Roguelikes)</p>
     <h2 class="section-title">SHOWCASE</h2>
     <div class="projects-grid">
 
-      <div class="project-card" onclick="openModal('lupus')">
-        <div class="card-thumb">
-          <img src="images/Lupus Therapy.png" alt="Lupus Therapy VR">
-          <div class="play-btn"><svg viewBox="0 0 68 48" style="width:56px;height:56px;filter:drop-shadow(0 2px 12px rgba(0,0,0,0.6))"><path d="M66.52,7.74C65.73,4.79,63.42,2.48,60.47,1.68C55.15,.33,34,0,34,0S12.85,.33,7.53,1.68C4.58,2.48,2.27,4.79,1.48,7.74C.13,13.06,0,24,0,24s.13,10.94,1.48,16.26c.79,2.95,3.1,5.26,6.05,6.06C12.85,47.67,34,48,34,48s21.15-.33,26.47-1.68c2.95-.8,5.26-3.11,6.05-6.06C67.87,34.94,68,24,68,24S67.87,13.06,66.52,7.74z" fill="#ff0000"/><path d="M27,34L45,24L27,14V34z" fill="white"/></svg></div>
-        </div>
-        <div class="card-body">
-          <div class="card-cat">onliveline GmbH · Medical VR</div>
-          <div class="card-title">LUPUS THERAPY VR (2023)</div>
-          <div class="card-desc">VR storytelling experience, understanding the autoimmune disease lupus and how it is treated.</div>
-          <div class="card-tags"><span class="tag">Unity</span><span class="tag">XR</span><span class="tag">Medical</span></div>
-        </div>
-      </div>
-
-      <div class="project-card" onclick="openModal('ego')">
-        <div class="card-thumb">
-          <img src="https://img.youtube.com/vi/IpKqm6jshl4/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/IpKqm6jshl4/hqdefault.jpg'" alt="Project Ego">
-          <div class="play-btn"><svg viewBox="0 0 68 48" style="width:56px;height:56px;filter:drop-shadow(0 2px 12px rgba(0,0,0,0.6))"><path d="M66.52,7.74C65.73,4.79,63.42,2.48,60.47,1.68C55.15,.33,34,0,34,0S12.85,.33,7.53,1.68C4.58,2.48,2.27,4.79,1.48,7.74C.13,13.06,0,24,0,24s.13,10.94,1.48,16.26c.79,2.95,3.1,5.26,6.05,6.06C12.85,47.67,34,48,34,48s21.15-.33,26.47-1.68c2.95-.8,5.26-3.11,6.05-6.06C67.87,34.94,68,24,68,24S67.87,13.06,66.52,7.74z" fill="#ff0000"/><path d="M27,34L45,24L27,14V34z" fill="white"/></svg></div>
-        </div>
-        <div class="card-body">
-          <div class="card-cat">Consultant / Self-Employed · Action Adventure</div>
-          <div class="card-title">PROJECT EGO (2022)</div>
-          <div class="card-desc">3rd person action adventure demo built with UE5.</div>
-          <div class="card-tags"><span class="tag">Unreal Engine</span><span class="tag">Action</span><span class="tag">3rd Person</span></div>
-        </div>
-      </div>
-
+      <!-- 2024 -->
       <div class="project-card" onclick="openModal('mg')">
         <div class="card-thumb">
           <img src="images/MG.png" alt="mG Treatment Storytelling VR">
@@ -261,32 +235,6 @@ Fan of the 3R's (Racing, RPGs, Roguelikes)</p>
           <div class="card-title">mG TREATMENT STORYTELLING VR (2024)</div>
           <div class="card-desc">Myasthenia Gravis treatment storytelling experience. Built for Quest 3.</div>
           <div class="card-tags"><span class="tag">Unity</span><span class="tag">XR</span><span class="tag">Medical</span></div>
-        </div>
-      </div>
-
-      <div class="project-card" onclick="openModal('proximity')">
-        <div class="card-thumb">
-          <img src="images/Proximity.png" alt="Proximity">
-          <div class="play-btn"><svg viewBox="0 0 68 48" style="width:56px;height:56px;filter:drop-shadow(0 2px 12px rgba(0,0,0,0.6))"><path d="M66.52,7.74C65.73,4.79,63.42,2.48,60.47,1.68C55.15,.33,34,0,34,0S12.85,.33,7.53,1.68C4.58,2.48,2.27,4.79,1.48,7.74C.13,13.06,0,24,0,24s.13,10.94,1.48,16.26c.79,2.95,3.1,5.26,6.05,6.06C12.85,47.67,34,48,34,48s21.15-.33,26.47-1.68c2.95-.8,5.26-3.11,6.05-6.06C67.87,34.94,68,24,68,24S67.87,13.06,66.52,7.74z" fill="#ff0000"/><path d="M27,34L45,24L27,14V34z" fill="white"/></svg></div>
-        </div>
-        <div class="card-body">
-          <div class="card-cat">Student Game · 🏆 Award Winner</div>
-          <div class="card-title">PROXIMITY (2016)</div>
-          <div class="card-desc">Award-winning couch co-op/multiplayer game. A spin on the classic game of hot potato. Built using Construct 2.</div>
-          <div class="card-tags"><span class="tag">Construct 2</span><span class="tag">Student Project</span></div>
-        </div>
-      </div>
-
-      <div class="project-card" onclick="openModal('firstaid')">
-        <div class="card-thumb">
-          <img src="images/First Aid In Traffic VR.png" alt="First Aid In Traffic VR">
-          <div class="play-btn"><svg viewBox="0 0 68 48" style="width:56px;height:56px;filter:drop-shadow(0 2px 12px rgba(0,0,0,0.6))"><rect width="68" height="48" rx="10" fill="rgba(0,0,0,0.7)"/><path d="M27,34L45,24L27,14V34z" fill="white"/></svg></div>
-        </div>
-        <div class="card-body">
-          <div class="card-cat">Freelance · VR Simulation</div>
-          <div class="card-title">FIRST AID IN TRAFFIC VR (2022)</div>
-          <div class="card-desc">Emergency response VR training for the German market. AI pedestrians, driving simulations, randomised accident scenarios. Built for Meta Quest 2.</div>
-          <div class="card-tags"><span class="tag">Unreal Engine</span><span class="tag">Quest 2</span><span class="tag">AI NPCs</span></div>
         </div>
       </div>
 
@@ -303,6 +251,7 @@ Fan of the 3R's (Racing, RPGs, Roguelikes)</p>
         </div>
       </div>
 
+      <!-- 2023 -->
       <div class="project-card" onclick="openModal('storytelling')">
         <div class="card-thumb">
           <img src="images/Storytelling In VR.png" alt="Storytelling VR">
@@ -316,6 +265,47 @@ Fan of the 3R's (Racing, RPGs, Roguelikes)</p>
         </div>
       </div>
 
+      <div class="project-card" onclick="openModal('lupus')">
+        <div class="card-thumb">
+          <img src="images/Lupus Therapy.png" alt="Lupus Therapy VR">
+          <div class="play-btn"><svg viewBox="0 0 68 48" style="width:56px;height:56px;filter:drop-shadow(0 2px 12px rgba(0,0,0,0.6))"><path d="M66.52,7.74C65.73,4.79,63.42,2.48,60.47,1.68C55.15,.33,34,0,34,0S12.85,.33,7.53,1.68C4.58,2.48,2.27,4.79,1.48,7.74C.13,13.06,0,24,0,24s.13,10.94,1.48,16.26c.79,2.95,3.1,5.26,6.05,6.06C12.85,47.67,34,48,34,48s21.15-.33,26.47-1.68c2.95-.8,5.26-3.11,6.05-6.06C67.87,34.94,68,24,68,24S67.87,13.06,66.52,7.74z" fill="#ff0000"/><path d="M27,34L45,24L27,14V34z" fill="white"/></svg></div>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">onliveline GmbH · Medical VR</div>
+          <div class="card-title">LUPUS THERAPY VR (2023)</div>
+          <div class="card-desc">VR storytelling experience, understanding the autoimmune disease lupus and how it is treated.</div>
+          <div class="card-tags"><span class="tag">Unity</span><span class="tag">XR</span><span class="tag">Medical</span></div>
+        </div>
+      </div>
+
+      <!-- 2022 -->
+      <div class="project-card" onclick="openModal('firstaid')">
+        <div class="card-thumb">
+          <img src="images/First Aid In Traffic VR.png" alt="First Aid In Traffic VR">
+          <div class="play-btn"><svg viewBox="0 0 68 48" style="width:56px;height:56px;filter:drop-shadow(0 2px 12px rgba(0,0,0,0.6))"><rect width="68" height="48" rx="10" fill="rgba(0,0,0,0.7)"/><path d="M27,34L45,24L27,14V34z" fill="white"/></svg></div>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Freelance · VR Simulation</div>
+          <div class="card-title">FIRST AID IN TRAFFIC VR (2022)</div>
+          <div class="card-desc">Emergency response VR training for the German market. AI pedestrians, driving simulations, randomised accident scenarios. Built for Meta Quest 2.</div>
+          <div class="card-tags"><span class="tag">Unreal Engine</span><span class="tag">Quest 2</span><span class="tag">AI NPCs</span></div>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="openModal('ego')">
+        <div class="card-thumb">
+          <img src="https://img.youtube.com/vi/IpKqm6jshl4/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/IpKqm6jshl4/hqdefault.jpg'" alt="Project Ego">
+          <div class="play-btn"><svg viewBox="0 0 68 48" style="width:56px;height:56px;filter:drop-shadow(0 2px 12px rgba(0,0,0,0.6))"><path d="M66.52,7.74C65.73,4.79,63.42,2.48,60.47,1.68C55.15,.33,34,0,34,0S12.85,.33,7.53,1.68C4.58,2.48,2.27,4.79,1.48,7.74C.13,13.06,0,24,0,24s.13,10.94,1.48,16.26c.79,2.95,3.1,5.26,6.05,6.06C12.85,47.67,34,48,34,48s21.15-.33,26.47-1.68c2.95-.8,5.26-3.11,6.05-6.06C67.87,34.94,68,24,68,24S67.87,13.06,66.52,7.74z" fill="#ff0000"/><path d="M27,34L45,24L27,14V34z" fill="white"/></svg></div>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Consultant / Self-Employed · Action Adventure</div>
+          <div class="card-title">PROJECT EGO (2022)</div>
+          <div class="card-desc">3rd person action adventure demo built with UE5.</div>
+          <div class="card-tags"><span class="tag">Unreal Engine</span><span class="tag">Action</span><span class="tag">3rd Person</span></div>
+        </div>
+      </div>
+
+      <!-- 2017 -->
       <div class="project-card" onclick="openModal('overpowered')">
         <div class="card-thumb">
           <img src="images/Overpowered.png" alt="Overpowered">
@@ -326,19 +316,6 @@ Fan of the 3R's (Racing, RPGs, Roguelikes)</p>
           <div class="card-title">OVERPOWERED (2017)</div>
           <div class="card-desc">PC PvP combat game developed at SUTD Gamelab Singapore. Nominated — Taipei Game Show 2017.</div>
           <div class="card-tags"><span class="tag">Unity</span><span class="tag">PC</span><span class="tag">PvP</span></div>
-        </div>
-      </div>
-
-      <div class="project-card" onclick="openModal('fbgame')">
-        <div class="card-thumb">
-          <img src="images/Facebook Instant Games.png" alt="Facebook Instant Game">
-          <div class="play-btn"><svg viewBox="0 0 68 48" style="width:56px;height:56px;filter:drop-shadow(0 2px 12px rgba(0,0,0,0.6))"><path d="M66.52,7.74C65.73,4.79,63.42,2.48,60.47,1.68C55.15,.33,34,0,34,0S12.85,.33,7.53,1.68C4.58,2.48,2.27,4.79,1.48,7.74C.13,13.06,0,24,0,24s.13,10.94,1.48,16.26c.79,2.95,3.1,5.26,6.05,6.06C12.85,47.67,34,48,34,48s21.15-.33,26.47-1.68c2.95-.8,5.26-3.11,6.05-6.06C67.87,34.94,68,24,68,24S67.87,13.06,66.52,7.74z" fill="#ff0000"/><path d="M27,34L45,24L27,14V34z" fill="white"/></svg></div>
-        </div>
-        <div class="card-body">
-          <div class="card-cat">Consultant / Self-Employed · Casual</div>
-          <div class="card-title">FACEBOOK INSTANT GAME (2019)</div>
-          <div class="card-desc">Casual game prototype built in Unity for Facebook's Instant Games platform.</div>
-          <div class="card-tags"><span class="tag">Unity</span><span class="tag">WebGL</span><span class="tag">Facebook SDK</span></div>
         </div>
       </div>
 
@@ -354,6 +331,21 @@ Fan of the 3R's (Racing, RPGs, Roguelikes)</p>
           <div class="card-tags"><span class="tag">Unity</span><span class="tag">Android</span><span class="tag">Hyper Casual</span></div>
         </div>
       </div>
+
+      <!-- 2016 -->
+      <div class="project-card" onclick="openModal('proximity')">
+        <div class="card-thumb">
+          <img src="images/Proximity.png" alt="Proximity">
+          <div class="play-btn"><svg viewBox="0 0 68 48" style="width:56px;height:56px;filter:drop-shadow(0 2px 12px rgba(0,0,0,0.6))"><path d="M66.52,7.74C65.73,4.79,63.42,2.48,60.47,1.68C55.15,.33,34,0,34,0S12.85,.33,7.53,1.68C4.58,2.48,2.27,4.79,1.48,7.74C.13,13.06,0,24,0,24s.13,10.94,1.48,16.26c.79,2.95,3.1,5.26,6.05,6.06C12.85,47.67,34,48,34,48s21.15-.33,26.47-1.68c2.95-.8,5.26-3.11,6.05-6.06C67.87,34.94,68,24,68,24S67.87,13.06,66.52,7.74z" fill="#ff0000"/><path d="M27,34L45,24L27,14V34z" fill="white"/></svg></div>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Student Game · 🏆 Award Winner</div>
+          <div class="card-title">PROXIMITY (2016)</div>
+          <div class="card-desc">Award-winning couch co-op/multiplayer game. A spin on the classic game of hot potato. Built using Construct 2.</div>
+          <div class="card-tags"><span class="tag">Construct 2</span><span class="tag">Student Project</span></div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -387,7 +379,7 @@ Fan of the 3R's (Racing, RPGs, Roguelikes)</p>
 <div id="contact" class="contact-wrap">
   <div class="section-label">Contact</div>
   <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,4vw,56px);letter-spacing:4px;margin-top:8px;">GET IN TOUCH</h2>
-  <a href="mailto:sanketdas@live.com" class="contact-email">sanketdas@live.com</a>
+  <a href="/cdn-cgi/l/email-protection#6e1d0f00050b1a0a0f1d2e0207180b400d0103" class="contact-email"><span class="__cf_email__" data-cfemail="1a697b74717f6e7e7b695a76736c7f34797577">[email&#160;protected]</span></a>
   <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
     <a href="https://www.linkedin.com/in/sanket-das-929b11120/" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
     <a href="tel:+918459328768" class="btn btn-outline">+91 84593 28768</a>
@@ -396,8 +388,6 @@ Fan of the 3R's (Racing, RPGs, Roguelikes)</p>
 </div>
 
 <footer>
-  <span>Sanket Das — VR Developer</span>
-  <span>Pune, India</span>
 </footer>
 
 <div class="modal" id="modal" onclick="closeOutside(event)">
@@ -423,7 +413,7 @@ Fan of the 3R's (Racing, RPGs, Roguelikes)</p>
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const YT = (id, label) => ({ type:'youtube', id, label });
 const DR = (id, label) => ({ type:'drive', id, label });
 const LK = (url, label, desc) => ({ type:'link', url, label, desc });
@@ -529,16 +519,4 @@ function goToSlide(n) {
   currentSlide = n;
   document.querySelectorAll('#slides-container .slide').forEach((s, i) => s.classList.toggle('active', i === n));
   document.querySelectorAll('#slide-dots .dot').forEach((d, i) => d.classList.toggle('active', i === n));
-  updateMeta();
-}
-
-function nextSlide() { 
-  if (currentSlides.length > 1) goToSlide((currentSlide + 1) % currentSlides.length); 
-}
-
-function prevSlide() { 
-  if (currentSlides.length > 1) goToSlide((currentSlide - 1 + currentSlides.length) % currentSlides.length); 
-}
-</script>
-</body>
-</html>
+  updateMeta
